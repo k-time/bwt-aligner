@@ -1,6 +1,6 @@
 # bwt-aligner
-Command line tool for error-tolerant short read mapping using the Burrows-Wheeler transform (BWT).  
-See **Bioinformatics Report.pdf** and **Presentation.pdf** for detailed project explanation.
+* Command line tool for error-tolerant short read mapping using the Burrows-Wheeler transform (BWT).  
+* See **Bioinformatics Report.pdf** and **Presentation.pdf** for detailed project explanation.
 
 Burrow-Wheelers transform: https://en.wikipedia.org/wiki/Burrows%E2%80%93Wheeler_transform  
 BWT for sequence alignment: http://bioinformatics.oxfordjournals.org/content/25/14/1754.long
