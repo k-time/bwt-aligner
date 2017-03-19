@@ -1,8 +1,8 @@
 # bwt-aligner
-* Command line tool for error-tolerant short read mapping using the Burrows-Wheeler transform (BWT).  
-* See **Bioinformatics Report.pdf** and **Presentation.pdf** for detailed project explanation.
+* Command line tool for error-tolerant short read mapping using the [Burrows-Wheeler transform (BWT)](https://en.wikipedia.org/wiki/Burrows%E2%80%93Wheeler_transform), with FM-indexing, suffix tree search, and heuristics that prune branches at search time.
+* See **[Bioinformatics Report.pdf](https://github.com/k-time/bwt-aligner/blob/master/Bioinformatics%20Report.pdf)** and **[Presentation.pdf](https://github.com/k-time/bwt-aligner/blob/master/Presentation.pdf)** for detailed project explanation.
 
-Burrow-Wheelers transform: https://en.wikipedia.org/wiki/Burrows%E2%80%93Wheeler_transform  
+Sequence alignment: https://en.wikibooks.org/wiki/Next_Generation_Sequencing_(NGS)/Alignment  
 BWT for sequence alignment: http://bioinformatics.oxfordjournals.org/content/25/14/1754.long
 
 
@@ -12,12 +12,11 @@ We have included reference genome files and read files containing a random sampl
 The program files are described as follows:
 
 * **bwt.py**: Implementation of BWT and exact search.
-
-* **search_bwt.py**: Implementation of inexact search algorithm. Can map a single read.  
-	Usage: `python search_bwt.py [--no-indels] [test|<reference_file>] [<read_file>]`
 	
 * **align_reads.py**: Takes a reference genome file and aligned reads file (and optional threshold level) as input. Uses our aligner to predict the positions of reads, and then compares them to the actual positions.  
 	Usage: `python align_reads.py <genome file name> <read file name> [-t <threshold level>]`
+* **search_bwt.py**: Implementation of inexact search algorithm. Can map a single read.  
+	Usage: `python search_bwt.py [--no-indels] <reference_file> <read_file>`
 
 
 ## Recommended Usages
@@ -26,6 +25,7 @@ Here are our recommended usages to analyze our included data (with no -t flag, a
 * `python align_reads.py data/ebola_genome.fasta data/ebola_reads.fasta`
 * `python align_reads.py data/coronavirus_genome.fasta data/coronavirus_reads.fasta`
 * `python align_reads.py data/rsv_genome.fasta data/rsv_reads.fasta -t 7`
+* `python search_bwt.py test` (test example of read mapping)
 
 
 ## Other Details
