@@ -1,15 +1,16 @@
-'''
+"""
 align_reads.py
 short read mapping analysis over test data
-'''
+"""
 
-import sys
 import random
 from search_bwt import *
 
-# Get each read's identifier, position, and string value.
-# myfile is the file of reads in FASTA format.
+
+# myfile is the file of reads in FASTA format
 def parse_reads(myfile):
+    """ Get each read's identifier, position, and string value."""
+
     file_name = myfile
     read_file = open(file_name, 'r')
 
@@ -19,12 +20,10 @@ def parse_reads(myfile):
     read_dict = {}
     identifier = ''
     position = 0
-    read = ''
 
     line_num = 0
 
     for line in read_file:
-
         line_num += 1
 
         # Odd numbered lines are read metadata
@@ -37,8 +36,7 @@ def parse_reads(myfile):
         # Even numbered lines are read strings (actual nucleotide sequence)
         if line_num % 2 == 0:
             # Pick random bases to replace unknown nucleotides (rare)
-            base = ''
-            rand = random.randint(1,4)
+            rand = random.randint(1, 4)
             if rand == 1:
                 base = 'A'
             elif rand == 2:
@@ -50,21 +48,23 @@ def parse_reads(myfile):
 
             # Add the (key, value) pair to the dictionary of reads
             # Remove newline characters and replace unknown nucleotides in sequences
-            read_dict[identifier] = (position, line.rstrip().replace('N',base))
+            read_dict[identifier] = (position, line.rstrip().replace('N', base))
 
     read_file.close()
     return read_dict
 
 
-# Calculates the reverse compliment of a nucleotide sequence.
-# Needed because reads are pair-ended.
 def reverse_complement(base_string):
-    base_dict = { 'A':'T', 'T':'A', 'C':'G', 'G':'C' }
+    """
+    Calculates the reverse compliment of a nucleotide sequence.
+    Needed because reads are pair-ended.
+    """
+    base_dict = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
     return "".join([base_dict[base] for base in reversed(base_string)])  
 
 
-# Aligns each read to the reference genome.
 def align_reads(genome_file, reads_file, threshold):
+    """Aligns each read to the reference genome."""
     print "Calculating BWT, BWT reverse, suffix array, and aligning reads..."
 
     # Get read dictionary
@@ -72,7 +72,7 @@ def align_reads(genome_file, reads_file, threshold):
 
     # Get reference genome from file
     fref = open(genome_file)
-    ref = ''.join(fref.readlines()).replace('\n','')
+    ref = ''.join(fref.readlines()).replace('\n', '')
 
     # Calculate suffix array, BWT, and reverse BWT of genome
     sa = suffix_array(ref)
@@ -143,5 +143,7 @@ def main():
         return
 
     align_reads(sys.argv[1], sys.argv[2], threshold)
-    
-main()
+
+
+if __name__ == "__main__":
+    main()

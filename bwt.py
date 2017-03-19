@@ -1,18 +1,19 @@
-'''
+"""
 bwt.py
-implementation of burrows-wheeler transform for genome data
-'''
+Implementation of burrows-wheeler transform for genome data
+"""
 
 alphabet = ['A', 'C', 'G', 'T']
 
+
 def suffix_array(s):
-    '''build suffix array of string s'''
+    """build suffix array of string s"""
     sa = sorted([(s[i:], i) for i in xrange(0, len(s)+1)])
     return map(lambda x: x[1], sa)
 
 
 def bwt(t):
-    '''compute burrows-wheeler transform of string t'''
+    """compute burrows-wheeler transform of string t"""
     bw = []
     for i in suffix_array(t):
         if i == 0:
@@ -22,24 +23,22 @@ def bwt(t):
     return ''.join(bw)
 
 
-
 def first_col(totals):
-    '''make dict of chars to range of occurences in first column'''
+    """make dict of chars to range of occurrences in first column"""
     col = {}
     temp = 0
-    for i,j in sorted(totals.iteritems()):
-        col[i] = (temp, temp+j)
+    for i, j in sorted(totals.iteritems()):
+        col[i] = (temp, temp + j)
         temp += j
     return col
 
 
-
 def ibwt(bw):
-    '''decode bwt'''
+    """decode bwt"""
     ranks, totals = rank(bw)
     fc = first_col(totals)
     row = 0
-    t = "$"
+    t = '$'
 
     while bw[row] != '$':
         char = bw[row]
@@ -50,16 +49,14 @@ def ibwt(bw):
 
 
 def rank(bw):
-    '''rank(char) := list of number of occurences of a char for each substring R[:i] (reference)'''
+    """rank(char) := list of number of occurrences of a char for each substring R[:i] (reference)"""
     totals = {}
     ranks = {}
-
 
     for char in alphabet:
         if (char not in totals) and (char != '$'):
             totals[char] = 0
             ranks[char] = []
-
 
     for char in bw:
         if char != '$':
@@ -67,25 +64,24 @@ def rank(bw):
         for t in totals.iterkeys():
             ranks[t].append(totals[t])
 
-#    print(totals) ##DEBUG
-#    print(ranks) ##DEBUG
     return ranks, totals
 
 
-def count_matches_exact(bw,s):
-    '''return number of exact matches of s to bw'''
+def count_matches_exact(bw, s):
+    """return number of exact matches of s to bw"""
     ranks, totals = rank(bw)
     fc = first_col(totals)
 
+    # char isn't in bwt
     if s[-1] not in fc:
-        return 0 #char isn't in bwt
+        return 0
 
-    l,r = fc[s[-1]]
+    l, r = fc[s[-1]]
     i = len(s)-2
     while i >= 0 and r > 1:
         char = s[i]
-        l = fc[char][0] + ranks[char][l-1] #R(aW)
-        r = fc[char][0] + ranks[char][r-1] #Rbar(aW)
+        l = fc[char][0] + ranks[char][l-1]  # R(aW)
+        r = fc[char][0] + ranks[char][r-1]  # Rbar(aW)
         i -= 1
         print('l: '+str(l)+' r: '+str(r))
         print(''.join(bw[l:r]))
