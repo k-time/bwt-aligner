@@ -234,7 +234,8 @@ def main():
     start = time.time()
 
     threshold = 3  # this will be the z value
-    usage = '\nusage: python search_bwt.py [--no-indels] [test|<reference file name>] [<read file name>]\n'
+    usage = '\nusage:\tpython search_bwt.py [--no-indels] <reference file name> <read file name>' \
+            '\nor:\tpython search_bwt.py test\n'
 
     if '--no-indels' in sys.argv:
         global NO_INDELS
