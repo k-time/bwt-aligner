@@ -31,4 +31,4 @@ Here are our recommended usages to analyze our included data (with no -t flag, a
 ## Other Details
 Entire read files tend to be rather large; they can be found by going to http://www.ncbi.nlm.nih.gov/sra, searching for an organism/virus, filtering by “DNA” and “aligned data”, and clicking on a result and downloading the aligned reads from the run. You can also can download the SRA Toolkit to download results through a command line interface.
 
-Implemented using Python 2.7. Need to download library enum34 (run `pip install enum34`). We ran program on a MacBook; a more powerful machine will obviously speed up our results.
+Implemented using Python 2.7. We ran our program on a MacBook; a more powerful machine will obviously speed up our results.
